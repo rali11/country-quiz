@@ -1,20 +1,30 @@
-$_crayola: #F9A826;
-$_light-coral: #EA8282;
-$_iguana-green: #60BF88;
-$_medium-aquamarine: #6FCF97;
-$_white: #FFFFFF;
-$_indigo: #1D355D;
-$_metallic-blue: #2F527B;
-$_slate-blue: #6066D0;
-$_anti-flash-white: #F2F2F2;
+$_primary-crayola: #F9A826;
+$_primary-indigo: #1D355D;
+$_primary-metallic-blue: #2F527B;
+$_primary-anti-flash-white: #F2F2F2;
+$_primary-white: #FFFFFF;
+$_secondary-slate-blue: #6066D0;
+$_secondary-medium-aquamarine: #6FCF97;
+$_hover-crayola: #bd7f1c;
+$_shadow-crayola: rgba(252, 168, 47, 0.4);
+$_success: #60BF88;
+$_error: #EA8282;
 
-$border-light-color: $_slate-blue;
-$border-dark-color: $_indigo;
+$btn-primary: $_primary-crayola;
+$btn-primary-hover: $_hover-crayola;
+$btn-primary-shadow: $_shadow-crayola;
 
-$background-light-color: $_white;
-$background-wrong-color: $_light-coral;
-$background-success-color: $_iguana-green;
+$bg-light:$_primary-anti-flash-white;
+$bg-lighter: $_primary-white;
 
-$text-light-color: $_anti-flash-white;
-$text-title-color: $_indigo;
-$text-option-color: $_slate-blue;
+$choice-quiz: $_secondary-slate-blue;
+$choice-quiz-hover: $_primary-crayola;
+
+$state-success: $_success;
+$state-error: $_error;
+
+$text-primary: $_primary-metallic-blue;
+$text-primary-light: $_primary-anti-flash-white;
+$text-primary-lighter: $_primary-white;
+$text-primary-dark: $_primary-indigo;
+$text-secondary: $_secondary-slate-blue;

@@ -1,9 +1,13 @@
 <template>
-  <div id="app" />
+  <div id="app">
+    <quiz />
+  </div>
 </template>
 
 <script>
+import Quiz from './components/quiz/Quiz.vue'
 export default {
+  components: { Quiz },
   name: 'App'
 }
 </script>
