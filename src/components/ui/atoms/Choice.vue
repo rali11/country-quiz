@@ -6,7 +6,8 @@
       :id="id"
       :value="value"
       :name="name"
-      @change="$emit('change', $event.target.value)"      
+      :checked="checked"
+      @change="changeEvent($event.target)"      
     >
     <label
       :class="['choice__label', stateClass]"
@@ -44,18 +45,30 @@
       },
       state:{
         type: String,
-        default:'primary',
+        default:'show',
         validator: function(value){
-          return ['success','error','primary'].includes(value);
+          return ['success','error','hidden','show'].includes(value);
         },
+      },
+      checked:{
+        type: Boolean,
+        default:false,
       }
     },
     computed:{
       includeState(){
-        return ['success','error'].includes(this.state);
+        return ['success','error','hidden','show'].includes(this.state);
       },
       stateClass(){
         return this.includeState ? `choice__label--${this.state}`:'';
+      }
+    },
+    methods:{
+      changeEvent(target){
+        if(this.state === 'show'){
+          this.$emit('change',target.value);
+          this.$emit('update:checked', target.checked)
+        }        
       }
     }
   }
@@ -83,7 +96,7 @@
       color: variables.$choice-quiz;
       font-size: variables.$fs-btn;              
       font-weight: 500;
-      transition: all .2s;
+      transition: all .2s;      
 
       &::before {      
         position: absolute;
@@ -104,12 +117,31 @@
         transition: all .2s;
       }  
 
+      &--hidden, &--hidden:hover {       
+        animation-fill-mode: both ;          
+        animation-direction: normal;      
+        animation-duration: .6s;
+        animation-name: hide-choice;
+        animation-timing-function: ease-in-out;   
+      }
+
+      &--show, &--show:hover {
+        animation-fill-mode: both;        
+        animation-direction: normal;     
+        animation-duration: .6s;
+        animation-name: show-choice;
+        animation-timing-function: ease-in-out;
+      }
+
       &--success, &--success:hover, .choice__input:checked ~ &--success {
         background-color: variables.$state-success;
         border-color: variables.$state-success;
         color: variables.$text-primary-lighter;  
         position: relative;    
         transition: all .2s;
+        animation-duration: .9s;
+        animation-name: state-success;
+        animation-timing-function: ease-in-out;        
       }    
 
       &--error, &--error:hover, .choice__input:checked ~ &--error {
@@ -140,4 +172,37 @@
       }  
     }       
   }
+
+  @keyframes state-success {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hide-choice {
+    100% {
+      opacity: 0;
+      transform: translateX(-10rem);      
+    }
+  }
+
+  @keyframes show-choice {
+    0%{
+      opacity: 0;
+      transform: translateX(-10rem);  
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);      
+    }
+  }
+
+
+
 </style>
