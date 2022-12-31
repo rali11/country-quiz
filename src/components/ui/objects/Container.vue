@@ -22,5 +22,9 @@
   .container {
     margin: 0 auto;
     width: 29rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
   }
 </style>

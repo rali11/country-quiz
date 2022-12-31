@@ -7,7 +7,9 @@
     <h3 class="card__title">
       {{ title }}
     </h3>
-    <slot />
+    <div class="card__body">
+      <slot />
+    </div>    
   </div>
 </template>
 
@@ -43,6 +45,12 @@
     &__title {
       font-size:variables.$fs-title-3;
       padding: 2.4rem 0;
+    }
+
+    &__body {
+      overflow: hidden;
+      margin: 0 -2rem;
+      padding: 0 2rem;
     }
 
     &__image {
