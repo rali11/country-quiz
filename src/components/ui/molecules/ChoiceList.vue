@@ -2,7 +2,7 @@
   <div class="choice-list">
     <Choice 
       v-model="picked"
-      v-for="choice in choices"
+      v-for="choice in choicesList"
       :key="choice.id"      
       :id="choice.id"
       :value="choice.value"
@@ -11,7 +11,10 @@
     >
       {{ choice.label }}
     </Choice>
-    <Button @click="resetChoices">
+    <Button 
+      v-show="showBtnNext"
+      @click="resetchoicesList"
+    >
       Next
     </Button>
   </div>
@@ -23,60 +26,95 @@
 
   export default {
     components: { Choice, Button },
+    props:{
+      choices:{
+        type:Array,
+        default:() => []
+      },
+      changeChoices:{
+        type:Function,
+        default:() => {}
+      },
+      correctAnswer:{
+        type:String,
+        default:'',
+      }
+    },
     data(){
       return {
         id:1,
         picked:'',
-        correctAnswer:'13',
-        choices:[
-          {id:'optionA', value:"12", label:'Vietnam', state:'show', checked:false},
-          {id:'optionB', value:"13", label:'London', state:'show', checked:false},
-          {id:'optionC', value:"14", label:'Paris', state:'show',  checked:false},
-          {id:'optionD', value:"15", label:'Madrid', state:'show',  checked:false},
-        ]
+        choicesList:[],
+        showBtnNext:false,
       }
+    },
+    mounted(){
+      this.generateChoicesList();
     },
     watch:{
       picked(newVal){
         if(newVal){
-          const correctChoice = this.choices.find( choice => choice['value'] === this.correctAnswer);
+          const correctChoice = this.choicesList.find( choice => choice['value'] === this.correctAnswer);
           correctChoice.state = 'success';
           if (newVal !== this.correctAnswer){
-            const pickedChoice = this.choices.find( choice => choice.value === newVal);
+            const pickedChoice = this.choicesList.find( choice => choice.value === newVal);
             pickedChoice.state = 'error';
           }
-          this.choices.forEach(choice => {
+          this.choicesList.forEach(choice => {
             if(choice.value !== newVal && choice.value !== this.correctAnswer){
               choice.state = 'hidden';
             }
           });
+          this.showBtnNext = !this.showBtnNext;
         }
       }
     },
-    methods:{
-      hiddenChoices(){
+    methods:{      
+      async resetchoicesList(){
+        await this.changeChoices();
+        await this.hiddenChoicesList();
+        this.generateChoicesList();
+        this.picked = "";
+        this.showBtnNext = !this.showBtnNext;
+      },
+      hiddenChoicesList(){
         return new Promise(resolve => {
-          this.choices.forEach(choice => {
+          this.choicesList.forEach(choice => {
+              choice.checked = false;
               choice.state = 'hidden';
             });
           setTimeout(() => {            
             resolve();
           }, 500)
-        })     
-      },
-      async resetChoices(){
-        await this.hiddenChoices();
+        })
+      },    
+      generateChoicesList(){
+        this.choicesList = [];
+        let i = 1;
         this.choices.forEach(choice => {
-          choice.state = 'show';
-          choice.checked = false;
-        });
-        this.picked = "";
-      }
+          this.choicesList.push({
+            id:`option${i}`, 
+            value:choice.value, 
+            label:choice.label,
+            state:'show',
+            checked:false,
+          })
+          i++;
+        })
+      },  
     }
   }
 </script>
 <style lang="scss" scoped>
   .choice-list {
-    counter-reset: counterChoice;
+    counter-reset: counterChoice;     
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    gap: 1.56rem;
+
+    .btn {
+      margin-left:auto;
+    }
   }
 </style>

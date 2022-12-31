@@ -77,11 +77,7 @@
 <style lang="scss" scoped>
   @use "@/assets/styles/settings/variables";
   
-  .choice {        
-    & ~ & {
-      margin: 1.56rem 0;
-    }
-
+  .choice {  
     &__input {
       display: none;
     }     
