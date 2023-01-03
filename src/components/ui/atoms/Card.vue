@@ -4,11 +4,11 @@
       class="card__image"
       :src="image"
     >
-    <h3 class="card__title">
-      {{ title }}
-    </h3>
+    <header class="card__header">
+      <slot name="header" />
+    </header>
     <div class="card__body">
-      <slot />
+      <slot name="body" />
     </div>    
   </div>
 </template>
@@ -42,9 +42,11 @@
     padding: 2rem;
     position: relative;
 
-    &__title {
+    &__header {
       font-size:variables.$fs-title-3;
-      padding: 2.4rem 0;
+      padding: 2.4rem 2rem;
+      margin:0 -2rem;
+      overflow: hidden;
     }
 
     &__body {

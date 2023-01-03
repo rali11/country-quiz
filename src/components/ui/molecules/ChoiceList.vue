@@ -11,12 +11,14 @@
     >
       {{ choice.label }}
     </Choice>
-    <Button 
-      v-show="showBtnNext"
-      @click="resetchoicesList"
-    >
-      Next
-    </Button>
+    <transition name="slide">
+      <Button 
+        v-show="showBtnNext"
+        @click="resetchoicesList"
+      >
+        Next
+      </Button>
+    </transition>
   </div>
 </template>
 
@@ -70,12 +72,12 @@
       }
     },
     methods:{      
-      async resetchoicesList(){
+      async resetchoicesList(){        
+        this.showBtnNext = !this.showBtnNext;
         await this.changeChoices();
         await this.hiddenChoicesList();
         this.generateChoicesList();
         this.picked = "";
-        this.showBtnNext = !this.showBtnNext;
       },
       hiddenChoicesList(){
         return new Promise(resolve => {
@@ -116,5 +118,12 @@
     .btn {
       margin-left:auto;
     }
+  }
+  .slide-enter-active, .slide-leave-active {
+    transition: all .8s;
+  }
+  .slide-enter, .slide-leave-to {
+    transform: translateX(10rem);
+    opacity: 0;
   }
 </style>
