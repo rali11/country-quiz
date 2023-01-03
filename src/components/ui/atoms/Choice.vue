@@ -82,13 +82,16 @@
       display: none;
     }     
 
-    &__label {      
+    &__label {    
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       position: relative;
       counter-increment: counterChoice;
       border: 0.125rem solid variables.$choice-quiz;
       border-radius: 0.75rem;    
       display: block;
-      padding: 0.6rem 0 0.6rem 5.1rem;
+      padding: 0.6rem 3rem 0.6rem 5.1rem;
       color: variables.$choice-quiz;
       font-size: variables.$fs-btn;              
       font-weight: 500;
