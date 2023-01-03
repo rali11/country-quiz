@@ -198,7 +198,4 @@
       transform: translateX(0);      
     }
   }
-
-
-
 </style>
